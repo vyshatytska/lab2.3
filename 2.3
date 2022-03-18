@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lab2._3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /*Написати функцію, яка шукає найбільший з мінімальних елементів 
+             * по парних стовпцях матриці (k * n).*/
+            Random rnd = new Random();
+            int rowCount = 3;
+            int colCount = 3;
+
+            int[,] ab = new int[rowCount, colCount];
+            int Low = 4; // мінімальне число в массиві
+            int High = 45; // максимальне число в массиві
+
+            for (int i = 0; i < rowCount; i++)
+                for (int j = 0; j < colCount; j++)
+                    ab[i, j] = Low + rnd.Next() % (High - Low + 1);
+
+            Console.WriteLine();
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < colCount; j++)
+                    Console.Write($"{ab[i, j]} \t");
+
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            int min, max;
+            min = 0;
+            max = 0;
+            for (int i = 0; i < rowCount; i++)
+            {
+                if (i % 2 == 0) // визначає непарні рядки
+                {
+                    min = ab[i, 0];
+                    for (int j = 1; j < colCount; j++)
+                    {
+                        if (ab[i, j] < min)
+                        {
+                            min = ab[i, j];
+                        }
+                    }
+                    max = ab[i, 0];
+                    for (int j = 1; j < colCount; j++)
+                    {
+                        if (ab[i, j] < max)
+                        {
+                            max = ab[i, j];
+                        }
+                    }
+                    if (i == 1) // для уникнення помилок при першій ітерації
+                    {
+                        max = min;
+                    }
+                    if (min > max)
+                    {
+                        max = min;
+                    }
+                }
+            }
+   
+           Console.WriteLine($"Max = {max}");
+           Console.WriteLine();
+
+        }
+    }
+}
